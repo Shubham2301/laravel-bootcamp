@@ -19,8 +19,10 @@ class EventsController extends Controller
 	{
 		if(Auth::user())
         {
-      		$events = DB::table('events')->orderBy('event_date', 'asc')->get();
-			return view('events.allevents')->with('events', $events);
+
+      $events = DB::table('events')->orderBy('event_date', 'asc')->get();
+
+      return view('events.allevents')->with('events', $events);
         }
         else
         {
@@ -115,7 +117,9 @@ class EventsController extends Controller
 	*/
 	public function upcoming()
 	{
+
 		$event = DB::table('events')->orderBy('event_date', 'asc')->where('event_date','>',NOW())->first();
+    
 		return view('welcome')->with('event', $event);
 	}
 }
