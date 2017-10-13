@@ -6,6 +6,7 @@
 	<table class="events-table table">
 		<thead>
 			<tr>
+				<th>ID</th>
 				<th>Event Name</th>
 				<th>Event Theme</th>
 				<th>Event Venue</th>
@@ -16,7 +17,8 @@
 		<tbody>
 			@foreach($events as $event)
 				<tr>
-					<td>{{$event->event_name}}</td>
+					<td>{{$event->id}}</td>
+					<td><a href="/events/{{$event->id}}">{{$event->event_name}}</a></td>
 					<td>{{$event->event_theme}}</td>
 					<td>{{$event->event_venue}}</td>
 					<td>{{$event->event_date}}</td>
