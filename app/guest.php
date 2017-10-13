@@ -14,4 +14,6 @@ class guest extends Model
     protected $fillable = [
         'name', 'email'
     ];
+
+    public $timestamps = false;
 }

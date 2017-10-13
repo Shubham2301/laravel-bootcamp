@@ -17,7 +17,7 @@ class GuestController extends Controller
 	 */
 	public function index()
 	{
-		//
+		dd('hello guest');
 	}
 
 	/**
@@ -45,7 +45,8 @@ class GuestController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		Guest::create($request->all());
+		dd($request);
+		// Guest::create($request->all());
 		// $event = new events;
 		// $event->event_name =  request('event_name');
 		// $event->event_theme =  request('event_theme');
