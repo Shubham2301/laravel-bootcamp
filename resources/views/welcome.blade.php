@@ -83,10 +83,10 @@
 
 			<div class="content">
 				<div class="upcoming-event">
-					<p class="display-event-name soiree">Event Name: <strong>{{$event->event_name}}</strong></p>
-					<p class="display-event-theme soiree">Theme: <strong>{{$event->event_theme}}</strong></p>
-					<p class="display-event-date soiree">When: <strong>{{$event->event_date}}</strong></p>
-					<p class="display-event-venue soiree">Where: <strong>{{$event->event_venue}}</strong></p>
+					<p class="display-event-name soiree">Event Name: <strong>{{$event->name}}</strong></p>
+					<p class="display-event-theme soiree">Theme: <strong>{{$event->theme}}</strong></p>
+					<p class="display-event-date soiree">When: <strong>{{$event->date}}</strong></p>
+					<p class="display-event-venue soiree">Where: <strong>{{$event->venue}}</strong></p>
 				</div>
 			</div>
 		</div>

@@ -18,16 +18,15 @@ class EventsController extends Controller
 	public function index()
 	{
 		if(Auth::user())
-        {
+		{
+			$events = DB::table('events')->orderBy('date', 'asc')->get();
 
-      $events = DB::table('events')->orderBy('event_date', 'asc')->get();
-
-      return view('events.allevents')->with('events', $events);
-        }
-        else
-        {
-            return view('auth.login');
-        }
+	    	return view('events.allevents')->with('events', $events);
+		}
+		else
+		{
+			return view('auth.login');
+		}
 	}
 
 	/**
@@ -55,13 +54,14 @@ class EventsController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$event = new events;
-		$event->event_name =  request('event_name');
-		$event->event_theme =  request('event_theme');
-		$event->event_venue =  request('event_venue');
-		$event->event_date =  request('event_date');
+		$event = events::create($request->all());
+		// $event = new events;
+		// $event->event_name =  request('event_name');
+		// $event->event_theme =  request('event_theme');
+		// $event->event_venue =  request('event_venue');
+		// $event->event_date =  request('event_date');
 
-		$event->save();
+		// $event->save();
 
 		return redirect('/');
 		
@@ -118,8 +118,8 @@ class EventsController extends Controller
 	public function upcoming()
 	{
 
-		$event = DB::table('events')->orderBy('event_date', 'asc')->where('event_date','>',NOW())->first();
-    
+		$event = DB::table('events')->orderBy('date', 'asc')->where('date','>',NOW())->first();
+	
 		return view('welcome')->with('event', $event);
 	}
 }

@@ -17,7 +17,16 @@ class GuestController extends Controller
 	 */
 	public function index()
 	{
-		dd('hello guest');
+		if(Auth::user())
+		{
+			$guests = DB::table('guests')->get();
+
+	    	return view('guests.allguests')->with('guests', $guests);
+		}
+		else
+		{
+			return view('auth.login');
+		}
 	}
 
 	/**
@@ -45,15 +54,7 @@ class GuestController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		dd($request);
-		// Guest::create($request->all());
-		// $event = new events;
-		// $event->event_name =  request('event_name');
-		// $event->event_theme =  request('event_theme');
-		// $event->event_venue =  request('event_venue');
-		// $event->event_date =  request('event_date');
-
-		// $event->save();
+		$guest = guest::create($request->all());
 
 		return redirect('/');
 	}
