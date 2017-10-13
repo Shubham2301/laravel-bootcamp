@@ -18,4 +18,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'EventsController@index')->name('Soiree');
+Route::resource('events', 'EventsController');
+Route::resource('guests', 'GuestController');
