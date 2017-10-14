@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\events;
+use App\event;
+use App\guest;
+use App\event_guest;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -54,17 +56,8 @@ class EventsController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$event = events::create($request->all());
-		// $event = new events;
-		// $event->event_name =  request('event_name');
-		// $event->event_theme =  request('event_theme');
-		// $event->event_venue =  request('event_venue');
-		// $event->event_date =  request('event_date');
-
-		// $event->save();
-
+		$event = event::create($request->all());
 		return redirect('/');
-		
 	}
 
 	/**
@@ -73,9 +66,14 @@ class EventsController extends Controller
 	 * @param  \App\events  $events
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(events $events)
+	public function show($id)
 	{
-		//
+		$this_event = event::find($id);
+		$guest_list = guest::whereDoesntHave('guest_event', function ($query) use($id) {
+					    $query->where('event_id', '=', $id);
+					})->get();
+
+		return view('events.show',['this_event' => $this_event, 'guest_list' => $guest_list]);
 	}
 
 	/**
@@ -84,7 +82,7 @@ class EventsController extends Controller
 	 * @param  \App\events  $events
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(events $events)
+	public function edit(event $events)
 	{
 		//
 	}
@@ -96,7 +94,7 @@ class EventsController extends Controller
 	 * @param  \App\events  $events
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, events $events)
+	public function update(Request $request, event $events)
 	{
 		//
 	}
@@ -107,7 +105,7 @@ class EventsController extends Controller
 	 * @param  \App\events  $events
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(events $events)
+	public function destroy(event $events)
 	{
 		//
 	}
@@ -117,9 +115,21 @@ class EventsController extends Controller
 	*/
 	public function upcoming()
 	{
-
 		$event = DB::table('events')->orderBy('date', 'asc')->where('date','>',NOW())->first();
 	
 		return view('welcome')->with('event', $event);
+	}
+
+	/**
+		*send invitation for an event
+	*/
+	public function invite_guest($event_id, $guest_id)
+	{
+		$event = event_guest::create([
+			'event_id' => $event_id,
+			'guest_id' => $guest_id
+		]);
+
+		return redirect( '/events/'.$event_id );		
 	}
 }

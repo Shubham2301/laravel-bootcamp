@@ -11,15 +11,13 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', 'EventsController@upcoming');
 
 Auth::routes();
 
 
 Route::get('/home', 'EventsController@index')->name('Soiree');
+Route::get('/events/{e_id}/invite/{g_id}', 'EventsController@invite_guest');
 Route::resource('events', 'EventsController');
 Route::resource('guests', 'GuestController');
 

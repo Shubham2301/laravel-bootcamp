@@ -21,7 +21,7 @@ class GuestController extends Controller
 		{
 			$guests = DB::table('guests')->get();
 
-	    	return view('guests.allguests')->with('guests', $guests);
+			return view('guests.allguests')->with('guests', $guests);
 		}
 		else
 		{
@@ -65,9 +65,10 @@ class GuestController extends Controller
 	 * @param  \App\guest  $guest
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(guest $guest)
+	public function show($id)
 	{
-		//
+		$this_guest = guest::find($id);
+		return view('guests.show')->with('this_guest', $this_guest);
 	}
 
 	/**
@@ -103,4 +104,15 @@ class GuestController extends Controller
 	{
 		//
 	}
+
+	// /**
+	//  * Show guest list for an event
+	//  *
+	//  */
+	// public function guest_list()
+	// {
+	// 	$guests = DB::table('guests')->get();
+
+	// 	return view('events.show')->with('guests', $guests);
+	// }
 }

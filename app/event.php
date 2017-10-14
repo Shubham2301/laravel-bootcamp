@@ -3,14 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
-
-class guest extends Model
+class event extends Model
 {
-
-	function guest_event() {
-		return $this->belongsToMany('App\event', 'event_guests');
+	function event_guest() {
+		return $this->belongsToMany('App\guest', 'event_guests')->withPivot('RSVP_status');
 	}
 
 	/**
@@ -19,7 +16,7 @@ class guest extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'name', 'email'
+		'name', 'theme','date','venue'
 	];
 
 	public $timestamps = false;
