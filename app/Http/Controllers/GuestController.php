@@ -21,7 +21,7 @@ class GuestController extends Controller
 		{
 			$guests = DB::table('guests')->get();
 
-			return view('guests.allguests')->with('guests', $guests);
+			return view('guests.index')->with('guests', $guests);
 		}
 		else
 		{

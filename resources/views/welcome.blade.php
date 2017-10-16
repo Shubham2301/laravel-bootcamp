@@ -66,6 +66,10 @@
 			.m-b-md {
 				margin-bottom: 30px;
 			}
+
+			.upcoming-event {
+				/*background-color: #D5DBDB;*/
+			}
 		</style>
 	</head>
 	<body>
@@ -81,12 +85,13 @@
 				</div>
 			@endif
 
-			<div class="content">
-				<div class="upcoming-event">
-					<p class="display-event-name soiree">Event Name: <strong>{{$event->name}}</strong></p>
-					<p class="display-event-theme soiree">Theme: <strong>{{$event->theme}}</strong></p>
-					<p class="display-event-date soiree">When: <strong>{{$event->date}}</strong></p>
-					<p class="display-event-venue soiree">Where: <strong>{{$event->venue}}</strong></p>
+			<div class="content row">
+				<div class="upcoming-event col-xs-12">
+					<h2 style="font-size: 50px;">Upcoming Event</h2>
+					<p class="display-event-name soiree" name="name" >Event Name: <strong style="color:#A52A2A">{{$event->name}}</strong></p>
+					<p class="display-event-theme soiree" name="theme">Theme: <strong style="color:#A52A2A">{{$event->theme}}</strong></p>
+					<p class="display-event-date soiree" name="date">When: <strong style="color:#A52A2A">{{$event->date}}</strong></p>
+					<p class="display-event-venue soiree" name="venue">Where: <strong style="color:#A52A2A">{{$event->venue}}</strong></p>
 				</div>
 			</div>
 		</div>

@@ -1,27 +1,24 @@
 @extends ('layouts.app')
 
 @section('content')
-<style>
-		.this-event {
-			background-color: red;
-		}
-</style>
+
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-6 this-event">
-			<h1 class="display-event-name soiree">Event Name: <strong>{{ $this_event->name }}</strong></h1>
-			<p class="display-event-theme soiree">Theme: <strong>{{ $this_event->theme }}</strong></p>
-			<p class="display-event-date soiree">When: <strong>{{ $this_event->date }}</strong></p>
-			<p class="display-event-venue soiree">Where: <strong>{{ $this_event->venue }}</strong></p>
+		<div class="col-md-6 col-xs-12 this-event" style="text-align: center; border-style: double; border-color: #563d7c; margin: auto;">
+			<h2 class="display-event-name soiree">Event Name: <strong style="color:#A52A2A">{{ $this_event->name }}</strong></h2>
+			<p class="display-event-theme soiree">Theme: <strong style="color:#A52A2A; font-size:16px ">{{ $this_event->theme }}</strong></p>
+			<p class="display-event-date soiree">When: <strong style="color:#A52A2A; font-size:16px ">{{ $this_event->date }}</strong></p>
+			<p class="display-event-venue soiree">Where: <strong style="color:#A52A2A; font-size:16px ">{{ $this_event->venue }}</strong></p>
 		</div>
 
-		<div class="col-md-4 col-md-offset-2">
-			<h1 class="send-invites">Send Invitations</h1>
+		<div class="col-md-4 col-md-offset-2 col-xs-12">
+			<h2 class="send-invites">Send Invitations</h2>
 				<ul>
 					@foreach($guest_list as $guest)
 						<li><a href="/events/{{$this_event->id}}/invite/{{$guest->id}}">{{$guest->name}}</a></li>
 					@endforeach
+					<li><a href="/events/{{$this_event->id}}/invite/invite_all"><strong>Invite All</strong> </a></li>
 				</ul>
 		</div>
 	</div>
@@ -31,8 +28,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
-				<h3>Guests Invited for this event</h3>
-				<table class="table">
+				<h3 style="font-weight: bold;">Guests Invited for this event</h3>
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>Name</th>
@@ -43,7 +40,7 @@
 					<tbody>
 						@foreach($this_event->event_guest as $event_guest)
 						<tr>
-							<td>{{ $event_guest->name }}</td>
+							<td><a href="/guests/{{ $event_guest->id }}">{{ $event_guest->name }}</a></td>
 							<td>{{ $event_guest->email }}</td>
 							<td>{{ $event_guest->pivot->RSVP_status }}</td>
 						</tr>

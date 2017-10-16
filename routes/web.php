@@ -17,7 +17,7 @@ Auth::routes();
 
 
 Route::get('/home', 'EventsController@index')->name('Soiree');
-Route::get('/events/{e_id}/invite/{g_id}', 'EventsController@invite_guest');
+Route::get('/events/{event}/invite/{guest}', 'EventsController@invite_guest');
 Route::resource('events', 'EventsController');
 Route::resource('guests', 'GuestController');
 

@@ -8,6 +8,7 @@ use App\event_guest;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\SendInvitations;
 
 
 class EventsController extends Controller
@@ -23,7 +24,7 @@ class EventsController extends Controller
 		{
 			$events = DB::table('events')->orderBy('date', 'asc')->get();
 
-	    	return view('events.allevents')->with('events', $events);
+			return view('events.index')->with('events', $events);
 		}
 		else
 		{
@@ -70,10 +71,13 @@ class EventsController extends Controller
 	{
 		$this_event = event::find($id);
 		$guest_list = guest::whereDoesntHave('guest_event', function ($query) use($id) {
-					    $query->where('event_id', '=', $id);
+						$query->where('event_id', '=', $id);
 					})->get();
 
-		return view('events.show',['this_event' => $this_event, 'guest_list' => $guest_list]);
+		return view('events.show',[
+									'this_event' => $this_event,
+									'guest_list' => $guest_list
+								]);
 	}
 
 	/**
@@ -123,13 +127,30 @@ class EventsController extends Controller
 	/**
 		*send invitation for an event
 	*/
-	public function invite_guest($event_id, $guest_id)
+	public function invite_guest(event $event, guest $guest)
 	{
-		$event = event_guest::create([
-			'event_id' => $event_id,
-			'guest_id' => $guest_id
-		]);
+		$event_id = $event->id;
+		$guest_list = guest::whereDoesntHave('guest_event', function ($query) use($event_id) {
+						$query->where('event_id', '=', $event_id);
+					})->get();
 
-		return redirect( '/events/'.$event_id );		
+		// if($guest_id === 'invite_all'){
+		// 	foreach($guest_list as $guest):
+		// 		$event_guest = event_guest::create([
+		// 			'event_id' => $event_id,
+		// 			'guest_id' => $guest->id
+		// 		]);
+		// 	endforeach;	
+		// }
+
+		// else{
+			$event_guest = event_guest::create([
+				'event_id' => $event->id,
+				'guest_id' => $guest->id
+			]);
+		// }	
+
+			\Mail::to($guest)->send(new SendInvitations($event, $guest));
+		return redirect( '/events/'.$event->id );		
 	}
 }
