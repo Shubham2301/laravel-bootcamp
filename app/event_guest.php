@@ -20,7 +20,7 @@ class event_guest extends Model
      * @var array
      */
     protected $fillable = [
-        'event_id','guest_id'
+        'event_id','guest_id','RSVP_status'
     ];
 
     public $timestamps = false;

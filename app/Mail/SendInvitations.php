@@ -13,18 +13,18 @@ class SendInvitations extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $guest, $event;
+    public $guest, $event, $token;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(event $event, guest $guest)
+    public function __construct(event $event, guest $guest, $token)
     {
-        //
-        $this->guest = $guest; 
         $this->event = $event;
+        $this->guest = $guest; 
+        $this->token = $token;
     }
 
     /**

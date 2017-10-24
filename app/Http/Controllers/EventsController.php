@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\event;
 use App\guest;
+use Crypt;
+use App\createRsvpTable;
 use App\event_guest;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\SendInvitations;
+// use App\Mail\SendInvitations;
+// use App\Events\guest_invited;
 
 
 class EventsController extends Controller
@@ -75,9 +78,9 @@ class EventsController extends Controller
 					})->get();
 
 		return view('events.show',[
-									'this_event' => $this_event,
-									'guest_list' => $guest_list
-								]);
+			'this_event' => $this_event,
+			'guest_list' => $guest_list
+		]);
 	}
 
 	/**
@@ -120,7 +123,6 @@ class EventsController extends Controller
 	public function upcoming()
 	{
 		$event = DB::table('events')->orderBy('date', 'asc')->where('date','>',NOW())->first();
-	
 		return view('welcome')->with('event', $event);
 	}
 
@@ -148,9 +150,16 @@ class EventsController extends Controller
 				'event_id' => $event->id,
 				'guest_id' => $guest->id
 			]);
-		// }	
+		// }
 
-			\Mail::to($guest)->send(new SendInvitations($event, $guest));
+		$invitation_id = $event_guest->id;
+		$last_guest_email = $guest->email;
+		$get_token = event(new \App\Events\guest_invited($invitation_id, $last_guest_email));
+		event(new \App\Events\initiate_email($event, $guest, $get_token[0]));
+
+		// $this->send_email($event, $guest);
 		return redirect( '/events/'.$event->id );		
 	}
+
+	
 }

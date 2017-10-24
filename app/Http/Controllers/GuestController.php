@@ -68,6 +68,7 @@ class GuestController extends Controller
 	public function show($id)
 	{
 		$this_guest = guest::find($id);
+		// dd($this_guest->guest_event);
 		return view('guests.show')->with('this_guest', $this_guest);
 	}
 
